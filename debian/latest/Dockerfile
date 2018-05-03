@@ -6,7 +6,6 @@ ENV DATA_PATH=/data \
 	ETESYNC_PATH=/etesync
 
 ENV DJANGO_DB_PATH=$DATA_PATH/db.sqlite3 \
-	DJANGO_SECRET=$DATA_PATH/secret.txt \
 	DJANGO_STATICS=/var/www/static \
 	DJANGO_PORT=8000 \
 	SERVER="standalone"
