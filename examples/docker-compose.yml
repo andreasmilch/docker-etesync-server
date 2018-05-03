@@ -7,31 +7,25 @@ services:
   etesync:
     container_name: etesync
     hostname: etesync
-    image: etesync:latest
+    image:victorrds/etesync:latest
     expose:
-      - 8000    
+      - 8000
     volumes:
       - etestatic:/var/www/static:rw
     environment:
-      - DEBUG=True
       - SERVER=uwsgi
       - SUPER_USER=admin
       - SUPER_PASS=admin
-    restart: on-failure
     network_mode: "bridge"
   nginx:
     container_name: nginx
-    hostname: epoch
-    image: nginx
+    image: nginx:latest
     ports:
       - 443:443
       - 80:80
-    volumes:      
-      - ./nginx-example.conf:/etc/nginx/conf.d/default.conf:ro      
+    volumes:
       - etestatic:/var/www/static:ro
+      - ./nginx-example.conf:/etc/nginx/conf.d/default.conf:ro
     links:
       - etesync
-    #depends_on:
-    #  - etesync
-    restart: on-failure
     network_mode: "bridge"
