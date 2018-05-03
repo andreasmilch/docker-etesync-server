@@ -7,13 +7,16 @@ services:
   etesync:
     container_name: etesync
     hostname: etesync
-    image: victorrds/etesync:alpine
+    image: etesync:latest
     expose:
       - 8000    
     volumes:
       - etestatic:/var/www/static:rw
     environment:
+      - DEBUG=True
       - SERVER=uwsgi
+      - SUPER_USER=admin
+      - SUPER_PASS=admin
     restart: on-failure
     network_mode: "bridge"
   nginx:
@@ -24,7 +27,7 @@ services:
       - 443:443
       - 80:80
     volumes:      
-      - ../examples/nginx-example.conf:/etc/nginx/conf.d/default.conf:ro      
+      - ./nginx-example.conf:/etc/nginx/conf.d/default.conf:ro      
       - etestatic:/var/www/static:ro
     links:
       - etesync
