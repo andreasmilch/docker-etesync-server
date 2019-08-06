@@ -1,25 +1,16 @@
 # ETESync Sever Docker Images
 
-Docker image for [ETESync](https://www.etesync.com/) based on the [server-skeleton](https://github.com/etesync/server-skeleton) repository by [Tom Hacohen](https://github.com/tasn).
+Docker image for [ETESync](https://www.etesync.com/) using a MySQL database.
 
 ## Tags
 
-This build follows some tags of the Python official docker images:
-
-- `latest` [(stable:tags/latest/Dockerfile)](https://github.com/victor-rds/docker-etesync-server/blob/stable/tags/latest/Dockerfile)
-- `edge` [(master:tags/latest/Dockerfile)](https://github.com/victor-rds/docker-etesync-server/blob/master/tags/latest/Dockerfile)
 - `slim`  [(stable:tags/slim/Dockerfile)](https://github.com/victor-rds/docker-etesync-server/blob/stable/tags/slim/Dockerfile)
-- `alpine` [(stable:tags/debian/Dockerfile)](https://github.com/victor-rds/docker-etesync-server/blob/stable/tags/alpine/Dockerfile)
 
 ## Usage
 
-```docker run  -d -e SUPER_USER=admin -e SUPER_PASS=changeme -p 80:3735 -v /path/on/host:/data victorrds/etesync```
+```docker run  -d -e SUPER_USER=admin -e SUPER_PASS=changeme -e DB_HOST=db -e DB_DATABASE=etesyncapp -e DB_USER=etesync -e DB_PASS=changeme -p 80:3735 victorrds/etesync```
 
 Create a container running ETESync usiong http protocol.
-
-## Volumes
-
-`/data`: database file location
 
 ## Ports
 
@@ -35,8 +26,11 @@ This image exposes the **3735** TCP Port
   - `django-server` this mode uses the embedded django http server, `./manage.py runserver :3735`, this is not recommeded but can be useful for debugging
 - **SUPER_USER** and **SUPER_PASS**: Username and password of the django superuser (only used if no previous database is found, both must be used together);
 - **SUPER_EMAIL**: Email of the django superuser (optional, only used if no database is found);
+- **DB_HOST**: MySQL Database address.
+- **DB_DATABASE**: MySQL Database name.
+- **DB_USER**: MySQL Username.
+- **DB_PASS**: MySQL Password.
 - **PUID** and **PGID**: set user and group when running using uwsgi, default: `1000`;
-- **ETESYNC_DB_PATH**: Location of the ETESync SQLite database. default: `/data` volume;
 
 ## Settings and Customization
 
